@@ -15,7 +15,7 @@
 # along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 
 set -a # export everything
-readonly PROJECT_ROOT=$(dirname `readlink --canonicalize "${BASH_SOURCE[0]}"`)
+readonly PROJECT_ROOT=$(dirname `readlink -f "${BASH_SOURCE[0]}"`)
 
 source "$PROJECT_ROOT/essentials.sh"
 source "$PROJECT_ROOT/defaults.sh"
@@ -43,7 +43,7 @@ declare $ARRAY fzf_options=(
 [ $IS_FILE "$FILE_CONFIG" ] &&
     source "$FILE_CONFIG"
 
-if (( $SUPPORTED_UEBERZUG == 0 )) && 
+if (( $SUPPORTED_UEBERZUG == 0 )) &&
     [ $IS_DIRECTORY "$DIR_MUSIC" ]; then
     readonly PREVIEW_BOX_POSITION='right'
     preview_box_size="${preview_box_size:-$DEFAULT_PREVIEW_BOX_SIZE_COVER}"
@@ -75,8 +75,8 @@ function Fmui::initialise_keybindings {
             cmd="${data:1}"
 
             if [[ "${data:0:1}" == '(' ]]; then
-                cmd=`grep --only-matching --perl-regexp "$PATTERN_OUTER_BRACKETS" <<<"$data" |
-                            head --lines 1`
+                cmd=`pcregrep --only-matching "$PATTERN_OUTER_BRACKETS" <<<"$data" |
+                            head -n 1`
                 cmd="${cmd:1:-1}"
             fi
 
@@ -88,12 +88,12 @@ function Fmui::initialise_keybindings {
 
 
 function Fmui::cleanup {
-    Cover::stop_ueberzug 
+    Cover::stop_ueberzug
 }
 
 
 function Fmui::tui {
-    Cover::stop_ueberzug 
+    Cover::stop_ueberzug
     (( $SUPPORTED_UEBERZUG == 0 )) && \
         Cover::start_ueberzug
 

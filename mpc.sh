@@ -30,7 +30,7 @@ function Mpc::get_song_progress {
 
 function Mpc::get_song_duration {
     local duration=`mpc current --format "%time%"`
-    local seconds=$(( 
+    local seconds=$((
         $(( 10#`grep --only-matching --perl-regexp '([0-9]+)(?=:)' <<< "$duration"` * 60 )) +
         10#`grep --only-matching --perl-regexp '(?<=:)([0-9]+)' <<< "$duration"` ))
     echo -n "${seconds:-1}"
@@ -43,7 +43,7 @@ function Mpc::get_song_name {
 
 
 function Mpc::get_options {
-    mpc | grep "volume" | sed 's|:\([^ ]\)|: \1|' | head --lines 1
+    mpc | grep "volume" | sed 's|:\([^ ]\)|: \1|' | head -n 1
 }
 
 
@@ -53,7 +53,7 @@ function Mpc::get_playlist {
 
 
 function Mpc::get_playlist_filename {
-    mpc playlist --format '%file%' | head --lines "$1" | tail --lines 1
+    mpc playlist --format '%file%' | head -n "$1" | tail --lines 1
 }
 
 
