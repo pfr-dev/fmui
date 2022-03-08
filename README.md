@@ -1,4 +1,4 @@
-# FMUI
+# FMUI (forked to work on NetBSD)
 
 **f**zf **m**pd **u**ser **i**nterface  
 Warning: FMUI will add every song to your queue by default.
