@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# ~/.config/fmui/config
 
 # Add every song to the queue on starting FMUI
 fill_queue=false
