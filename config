@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+# Add every song to the queue on starting FMUI
+fill_queue=false
+
+# Clear queue on starting FMUI
+#clear_queue=true
+
+# fzf additional command line arguments
+fzf_options='-i'
+fzf_options='--cycle'
+
+#song_format='[[[%artist% - ]%title%]|[%file%]]'
+#song_list_format='%time% [[[%artist% - ]%title%]|[%file%]]'
+#preview='mpc | tail -n 1'
+prompt='Search Music: '
+#seek_step='00:00:10'
+#visualizer='cava'
+#mod='ctrl'
+#cover_max_width=225
+#cover_max_columns=30
+
+# Set to 0,0,0,0 if cover not enabled
+#margin=0,0,0,${cover_max_columns+1}
+
+# Set to 0 if cover not enabled
+preview_box_size=12
+
+# Music directory
+DIR_MUSIC=$HOME/Music

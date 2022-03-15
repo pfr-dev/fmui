@@ -18,21 +18,21 @@ source "$PROJECT_ROOT/defaults.sh"
 
 
 function Mpc::get_raw_song_info {
-    mpc | grep --perl-regexp ']\s*#'
+    mpc | pcregrep ']\s*#'
 }
 
 
 function Mpc::get_song_progress {
     Mpc::get_raw_song_info | \
-        grep --only-matching --perl-regexp '(?<=\()[0-9]+(?=%)'
+        pcregrep --only-matching '(?<=\()[0-9]+(?=%)'
 }
 
 
 function Mpc::get_song_duration {
     local duration=`mpc current --format "%time%"`
     local seconds=$((
-        $(( 10#`grep --only-matching --perl-regexp '([0-9]+)(?=:)' <<< "$duration"` * 60 )) +
-        10#`grep --only-matching --perl-regexp '(?<=:)([0-9]+)' <<< "$duration"` ))
+        $(( 10#`pcregrep --only-matching '([0-9]+)(?=:)' <<< "$duration"` * 60 )) +
+        10#`pcregrep --only-matching '(?<=:)([0-9]+)' <<< "$duration"` ))
     echo -n "${seconds:-1}"
 }
 
@@ -53,7 +53,7 @@ function Mpc::get_playlist {
 
 
 function Mpc::get_playlist_filename {
-    mpc playlist --format '%file%' | head -n "$1" | tail --lines 1
+    mpc playlist --format '%file%' | head -n "$1" | tail -n 1
 }
 
 

@@ -25,7 +25,7 @@ readonly Cover_FIFO="${DIR_TMP}/${$}-fmui-ueberzug"
 
 function ffmpeg {
     if type ffmpeg &>/dev/null; then
-        command ffmpeg "$@" 
+        command ffmpeg "$@"
     else
         command avconv "$@"
     fi
@@ -34,7 +34,7 @@ function ffmpeg {
 
 function ffprobe {
     if type ffprobe &>/dev/null; then
-        command ffprobe "$@" 
+        command ffprobe "$@"
     else
         command avprobe "$@"
     fi
@@ -49,7 +49,7 @@ function File::get_mime_type {
 function Video::extract_random_frame {
     local max_width="$1" path_video="$2" path_image="$3"
     local duration="`ffmpeg -i "$path_video" 2>&1 | grep 'Duration: ' | \
-                        grep --only-matching --perl-regexp '(\d+):(\d+):(\d+)'`"
+                        pcregrep --only-matching '(\d+):(\d+):(\d+)'`"
     local hour="${duration:0:2}" minute="${duration:3:2}" second="${duration:6:2}"
     local seconds=$(( second + minute * 60 + hour * 60 * 60 ))
     ffmpeg -y -ss $(( ( (RANDOM<<15) | RANDOM ) % seconds + 0 )) \
@@ -113,7 +113,7 @@ function Cover::on_selection_changed {
     local path_output="${DIR_CACHE}/${1}-${width}-${filename//[^0-9a-zA-Z]/}.jpg"
 
     [ ! $IS_FILE "$path_output" ] && {
-        mkdir --parents "$DIR_CACHE"
+        mkdir -p "$DIR_CACHE"
         Cover::create_image "$width" "$path_file" "$path_output"
     }
 
