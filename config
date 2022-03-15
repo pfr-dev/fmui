@@ -3,14 +3,13 @@
 # ~/.config/fmui/config
 
 # Add every song to the queue on starting FMUI
-fill_queue=false
+#fill_queue=false
 
 # Clear queue on starting FMUI
 #clear_queue=true
 
 # fzf additional command line arguments
-fzf_options='-i'
-fzf_options='--cycle'
+fzf_options=('--cycle' '-i')
 
 #song_format='[[[%artist% - ]%title%]|[%file%]]'
 #song_list_format='%time% [[[%artist% - ]%title%]|[%file%]]'
