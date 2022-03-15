@@ -2,11 +2,11 @@
 #
 # ~/.config/fmui/config
 
+# Clear queue on starting FMUI
+clear_queue=true
+
 # Add every song to the queue on starting FMUI
 #fill_queue=false
-
-# Clear queue on starting FMUI
-#clear_queue=true
 
 # fzf additional command line arguments
 fzf_options=('--cycle' '-i')
@@ -25,7 +25,7 @@ prompt='Search Music: '
 #margin=0,0,0,${cover_max_columns+1}
 
 # Set to 0 if cover not enabled
-preview_box_size=12
+preview_box_size=13
 
 # Music directory
 DIR_MUSIC=$HOME/Music
