@@ -49,7 +49,7 @@ function File::get_mime_type {
 function Video::extract_random_frame {
     local max_width="$1" path_video="$2" path_image="$3"
     local duration="`ffmpeg -i "$path_video" 2>&1 | grep 'Duration: ' | \
-                        pcregrep --only-matching '(\d+):(\d+):(\d+)'`"
+                        grep --only-matching --perl-regexp '(\d+):(\d+):(\d+)'`"
     local hour="${duration:0:2}" minute="${duration:3:2}" second="${duration:6:2}"
     local seconds=$(( second + minute * 60 + hour * 60 * 60 ))
     ffmpeg -y -ss $(( ( (RANDOM<<15) | RANDOM ) % seconds + 0 )) \
@@ -59,7 +59,8 @@ function Video::extract_random_frame {
 
 
 function Music::contains_album_cover {
-    ffprobe "$@" 2>&1 | grep --ignore-case 'Album cover' &>/dev/null
+    ffprobe "$@" 2>&1 | grep -qi -e 'cover' \
+        -e 'Stream .* (m?jpeg|webp|png|bmp) .*attached pic'
 }
 
 
