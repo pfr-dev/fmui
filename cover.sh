@@ -59,9 +59,9 @@ function Video::extract_random_frame {
 
 
 function Music::contains_album_cover {
-    ffprobe "$@" 2>&1 | grep -qi -e 'cover' \
-        -e 'Stream .* (m?jpeg|webp|png|bmp) .*attached pic'
-}
+    ffprobe "$@" 2>&1 | grep -qi -e 'Album cover' \
+        -e 'Stream #.*: Video: (m?jpeg|webp|png|bmp)'
+    }
 
 
 function Music::extract_album_cover {
