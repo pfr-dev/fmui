@@ -59,7 +59,7 @@ function Video::extract_random_frame {
 
 
 function Music::contains_album_cover {
-    ffprobe "$@" 2>&1 | grep -qi -e 'Album cover' \
+    ffprobe "$@" 2>&1 | egrep -qi -e 'Album cover' \
         -e 'Stream #.*: Video: (m?jpeg|webp|png|bmp)'
     }
 
@@ -78,8 +78,19 @@ function Cover::create_image {
             Video::extract_random_frame "$max_width" "$path_file" "$path_output"
             ;;
         audio/*)
-            Music::contains_album_cover "$path_file" && \
+#            Music::contains_album_cover "$path_file" && \
+            if Music::contains_album_cover "$path_file"; then
                 Music::extract_album_cover "$max_width" "$path_file" "$path_output"
+            else
+                local found=false
+                for f in "${path_file%.*}".{jpg,jpeg,png,webp,bmp} \
+                  "$(dirname "$path_file")"/{C,c}over.{jpg,jpeg,png,webp,bmp}; do
+                    test -r "$f" && { path_file="$f"; found=true; break; }
+                done
+                if $found ; then
+                    Music::extract_album_cover "$max_width" "$path_file" "$path_output"
+                fi
+            fi
             ;;
     esac
 }
